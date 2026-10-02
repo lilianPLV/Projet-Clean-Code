@@ -9,15 +9,14 @@ Renvoie le prix final du ticket.
 
 ## 2. Problèmes identifiés
 
-Pas de garde fou pour le numéro du client
 | # | Problème | Catégorie | Impact |
 |---|---|---|---|
-| 1 | Booking Service : Nombre magique| lisibilité |  |
-| 2 | Booking Service : trop de responsabilité | Strucutre / Responsabilité |  |
-| 3 | Booking Service : Accumulation de conditions | Structure / Couplage |  |
-| 4 | Booking Service : Dépendance avec d'autres classes (StripeClient, EmailService) | Couplage |  |
-| 5 | Pas de garde-fou pour le numéro du client | règles métier |  |
-| 6 |  |  |  |
+| 1 | Booking Service : Nombre magique| lisibilité | Important |
+| 2 | Booking Service : trop de responsabilité | Strucutre / Responsabilité | Très impportant |
+| 3 | Booking Service : Plusieurs if dans une classe | Structure / Couplage | Important |
+| 4 | Booking Service : Dépendance avec d'autres classes (StripeClient, EmailService) | Couplage | Critique |
+| 5 | Pas de garde-fou pour le numéro du client | règles métier | Important |
+| 6 | Strip Client : Nom de fonction pas assez explicite | Lisibilité | Peu important |
 
 ## 3. Nos trois priorités
 
@@ -27,4 +26,4 @@ Pas de garde fou pour le numéro du client
 
 ## 4. Risques avant refactoring
 
-À compléter.
+
