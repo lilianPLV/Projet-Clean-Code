@@ -2,17 +2,21 @@
 
 ## 1. Comportement observable
 
-À compléter.
+L'application va calculer le payment que l'utilisateur devra payer avec la méthode de payment.
+Ajout dans la base de donnée l'id du ticket, le prix et la confirmation de la reservation.
+Relier  l'email de l'utilisateur avec avec le ticket
+Renvoie le prix final du ticket.
 
 ## 2. Problèmes identifiés
 
+Pas de garde fou pour le numéro du client
 | # | Problème | Catégorie | Impact |
 |---|---|---|---|
-| 1 |  |  |  |
-| 2 |  |  |  |
-| 3 |  |  |  |
-| 4 |  |  |  |
-| 5 |  |  |  |
+| 1 | Booking Service : Nombre magique| lisibilité |  |
+| 2 | Booking Service : trop de responsabilité | Strucutre / Responsabilité |  |
+| 3 | Booking Service : Plusieurs if dans une classe | Structure / Couplage |  |
+| 4 | Booking Service : Dépendance avec d'autres classes (StripeClient, EmailService) | Couplage |  |
+| 5 | Pas de garde-fou pour le numéro du client | règles métier |  |
 | 6 |  |  |  |
 
 ## 3. Nos trois priorités
