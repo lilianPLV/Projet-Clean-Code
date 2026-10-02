@@ -23,7 +23,7 @@ $booking = new Booking(
     passType: 'day'
 );
 
-$gateway = new StripeObserver(new StripeClient());
+$gateway = new StripeAdapter(new StripeClient());
 
 $booking->addItem(new BookingItem($dayTicket, 2));
 

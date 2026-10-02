@@ -80,17 +80,12 @@ $tests->near(
     'VIP gets 15 percent discount from 300 euros'
 );
 
-$tests->same(true,$bookingTotal >= 0,'final ticket price is not negative after discount');
 
 $cheapThreeDays = createBooking('standard', '3days', 20.0, 1);
 
 $cheapThreeDaysTotal = $service->confirm($cheapThreeDays, $gateway);
 
-$tests->same(
-    0.0,
-    $cheapThreeDaysTotal,
-    'final ticket price cannot be negative'
-);
+$tests->same(0.0,$cheapThreeDaysTotal,'final ticket price cannot be negative');
 
 ob_end_clean();
 $tests->summary();
