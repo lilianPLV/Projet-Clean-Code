@@ -21,21 +21,23 @@ function createBooking(
     return $booking;
 }
 
-ob_start();
+$gateway = new StripeObserver(new StripeClient());
+
+// ob_start();
 $service = new BookingService();
 
 $standard = createBooking('standard', 'day', 50.0, 2);
-$standardTotal = $service->confirm($standard, 'stripe');
+$standardTotal = $service->confirm($standard, $gateway);
 $tests->near(100.0, $standardTotal, 'standard customer keeps initial total');
 $tests->same('confirmed', $standard->status, 'booking becomes confirmed');
 
 $vip = createBooking('vip', 'day', 50.0, 2);
-$vipTotal = $service->confirm($vip, 'stripe');
+$vipTotal = $service->confirm($vip, $gateway);
 $tests->near(90.0, $vipTotal, 'legacy VIP rule gives 10 percent discount');
 
 $threeDays = createBooking('standard', '3days', 60.0, 2);
-$threeDaysTotal = $service->confirm($threeDays, 'stripe');
+$threeDaysTotal = $service->confirm($threeDays, $gateway);
 $tests->near(110.0, $threeDaysTotal, 'legacy three day pass discount is 10 euros');
 
-ob_end_clean();
+// ob_end_clean();
 $tests->summary();
