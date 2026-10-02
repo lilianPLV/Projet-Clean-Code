@@ -22,4 +22,9 @@ final class Booking
     {
         $this->items[] = $item;
     }
+
+    public function isEmpty(): bool
+    {
+        return count($this->items) === 0;
+    }
 }

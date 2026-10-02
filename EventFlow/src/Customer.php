@@ -11,4 +11,9 @@ final class Customer
         public string $type = 'standard'
     ) {
     }
+
+    public function hasValidEmail(): bool
+    {
+        return filter_var($this->email, FILTER_VALIDATE_EMAIL) !== false;
+    }
 }

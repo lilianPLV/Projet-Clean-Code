@@ -7,7 +7,7 @@ final class StripeClient
     public function charge(float $amount): string
     {
         if ($amount <= 0) {
-            throw new RuntimeException('Invalid amount');
+            $amount = 0;
         }
 
         return 'stripe_' . number_format($amount, 2, '.', '');

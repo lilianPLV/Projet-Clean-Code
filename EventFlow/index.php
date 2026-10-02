@@ -23,6 +23,8 @@ $booking = new Booking(
     passType: 'day'
 );
 
+$gateway = new StripeObserver(new StripeClient());
+
 $booking->addItem(new BookingItem($dayTicket, 2));
 
 $gateway = new StripeAdapter(new StripeClient());
@@ -42,5 +44,8 @@ $analyticsClientObserver->analysticClient($event);
 $smsClientObserver->Sms($event);
 $loyaltyPointObserver->LoyaltyPoint($event);
 $emailConfirmationObserver->EmailConfirmed($event);
+
+$timerpaymentstart = microtime(true);
+$timerpaymentend = microtime(true);
 
 echo 'TOTAL FINAL: ' . number_format($total, 2, '.', '') . PHP_EOL;;

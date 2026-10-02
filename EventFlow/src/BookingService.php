@@ -7,11 +7,11 @@ final class BookingService
 {
     public function confirm(Booking $booking, PayGateway $paymentMethod): float
     {
-        if (count($booking->items) === 0) {
+        if ($booking->isEmpty()) {
             throw new RuntimeException('Empty booking');
         }
 
-        if (!filter_var($booking->customer->email, FILTER_VALIDATE_EMAIL)) {
+        if (!$booking->customer->hasValidEmail()) {
             throw new RuntimeException('Invalid email');
         }
 
@@ -25,14 +25,22 @@ final class BookingService
             $total += $item->ticket->price * $item->quantity;
         }
 
+        $reduction = [  'TotalLowerThan100'     => 0.95,
+                        'TotalLowerThan300'     => 0.9,
+                        'TotalSuperiorThan300' => 0.85,
+                        'Reduction20' => 20];
+
+        $stepReduction = [ 'FirstStepReduction' => 100,
+                            'SecondStepReduction' => 300];
+
         if ($booking->customer->type === 'vip') {
-            $valueReductionVIP = new CalculReductionVIP;
+            $valueReductionVIP = new CalculReductionVIP($reduction, $stepReduction);
             $total = $valueReductionVIP->calcul($total);
 
         }
 
         if ($booking->passType === '3days') {
-            $valueReductionPassType = new CalculReductionPassType();
+            $valueReductionPassType = new CalculReductionPassType($reduction);
             $total = $valueReductionPassType->calcul($total);
         }
 
@@ -45,15 +53,6 @@ final class BookingService
         echo "PAYMENT:{$transactionId} " . PHP_EOL;
         echo sprintf ("Payment duration: %.5f ms", $end) . PHP_EOL;
 
-        // if ($paymentMethod === 'stripe') {
-        //     $stripe = new StripeClient();
-        //     $transactionId = $stripe->charge($total);
-        //     echo "PAYMENT {$transactionId}" . PHP_EOL;
-        // } elseif ($paymentMethod === 'payfast') {
-        //     throw new RuntimeException('PayFast not implemented');
-        // } else {
-        //     throw new RuntimeException('Unknown payment method');
-        // }
 
         $booking->status = 'confirmed';
 
@@ -61,7 +60,7 @@ final class BookingService
 
 
 
-        $verificationTotalPositive = new CalculTotalReduction();
+        $verificationTotalPositive = new CalculTotalReduction($reduction);
         $total = $verificationTotalPositive->calcul($total);
 
         return $total;
