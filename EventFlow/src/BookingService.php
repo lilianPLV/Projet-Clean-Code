@@ -36,6 +36,8 @@ final class BookingService
             $total = $valueReductionPassType->calcul($total);
         }
 
+        echo 'The total amount requested is: ' . $total . PHP_EOL;  
+
         $start = hrtime(true);
         $transactionId = $paymentMethod->pay($total);
         $end = (hrtime(true) - $start) / 1_000_000;

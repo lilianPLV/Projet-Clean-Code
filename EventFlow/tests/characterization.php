@@ -38,7 +38,6 @@ $tests->near(90.0, $vipTotal, 'legacy VIP rule gives 10 percent discount');
 $threeDays = createBooking('standard', '3days', 60.0, 2);
 $threeDaysTotal = $service->confirm($threeDays, $gateway);
 $tests->near(100.0, $threeDaysTotal, 'legacy three day pass discount is 20 euros');
-<<<<<<< Updated upstream
 
 
 $phonenumber = createBooking('standard', 'day', 50.0, 2, '0612345678');
@@ -51,8 +50,6 @@ $bookingTotal = $service->confirm($TicketPrice, $gateway);
 
 $tests->same(true,$bookingTotal >= 0,'final ticket price is not negative after discount');
 
-=======
->>>>>>> Stashed changes
 
 ob_end_clean();
 $tests->summary();
