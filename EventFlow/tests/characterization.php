@@ -21,7 +21,8 @@ function createBooking(
     return $booking;
 }
 
-$gateway = new StripeObserver(new StripeClient());
+$gateway = new StripeAdapter(new StripeClient());
+//$gateway = new PayFastAdapter(new PayFastSdk());
 
 ob_start();
 $service = new BookingService();

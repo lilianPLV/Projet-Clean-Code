@@ -20,5 +20,5 @@ require_once __DIR__ . '/src/Observer/EmailConfirmationObserver.php';
 require_once __DIR__ . '/src/Observer/LoyaltyPointObserver.php';
 require_once __DIR__ . '/src/Observer/SmsClientObserver.php';
 require_once __DIR__ . '/src/PayGateway.php';
-require_once __DIR__ . '/src/StripeObserver.php';
-require_once __DIR__ . '/src/PayFastObserver.php';
+require_once __DIR__ . '/src/StripeAdapter.php';
+require_once __DIR__ . '/src/PayFastAdapter.php';

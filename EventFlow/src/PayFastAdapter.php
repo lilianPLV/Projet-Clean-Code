@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-class PayFastObserver implements PayGateway
+class PayFastAdapter implements PayGateway
 {
     public function __construct(private readonly PayFastSdk $payfast) {}
     public function pay(float $amount): string 

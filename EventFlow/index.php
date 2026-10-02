@@ -25,8 +25,8 @@ $booking = new Booking(
 
 $booking->addItem(new BookingItem($dayTicket, 2));
 
-$gateway = new StripeObserver(new StripeClient());
-//$gateway = new PayFastObserver(new PayFastSdk());
+$gateway = new StripeAdapter(new StripeClient());
+//$gateway = new PayFastAdapter(new PayFastSdk());
 
 $service = new BookingService();
 $total = $service->confirm($booking, $gateway);
