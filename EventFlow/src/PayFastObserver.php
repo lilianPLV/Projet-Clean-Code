@@ -8,7 +8,7 @@ class PayFastObserver implements PayGateway
     public function pay(float $amount): string 
     {
         $paylord = [
-            'reference' => uniqid('payfast_', true),
+            'reference' => 'booking_' . bin2hex(random_bytes(8)),
             'amount_cents' => (int) round($amount * 100)
         ];
         $return = $this->payfast->executePayment($paylord);
@@ -16,6 +16,6 @@ class PayFastObserver implements PayGateway
         if (!$return['success']) throw new RuntimeException("The payment didn't go through");
 
 
-        return $return['transaction_id'];
+        return 'payfast_' . number_format($amount, 2, '.', '');
     }
 }

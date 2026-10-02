@@ -36,8 +36,12 @@ final class BookingService
             $total = $valueReductionPassType->calcul($total);
         }
 
+        $start = hrtime(true);
         $transactionId = $paymentMethod->pay($total);
+        $end = (hrtime(true) - $start) / 1_000_000;
+
         echo "PAYMENT:{$transactionId} " . PHP_EOL;
+        echo sprintf ("Payment duration: %.5f ms", $end) . PHP_EOL;
 
         // if ($paymentMethod === 'stripe') {
         //     $stripe = new StripeClient();

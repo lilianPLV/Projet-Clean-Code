@@ -25,8 +25,11 @@ $booking = new Booking(
 
 $booking->addItem(new BookingItem($dayTicket, 2));
 
+$gateway = new StripeObserver(new StripeClient());
+//$gateway = new PayFastObserver(new PayFastSdk());
+
 $service = new BookingService();
-$total = $service->confirm($booking, 'stripe');
+$total = $service->confirm($booking, $gateway);
 
 $analyticsClientObserver = new AnalyticsClientObserver();
 $smsClientObserver = new SmsClientObserver();

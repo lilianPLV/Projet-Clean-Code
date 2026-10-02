@@ -10,6 +10,6 @@ class SmsClientObserver {
         }
         
         $SmsSent = new \SmsClient();
-        $SmsSent->send($phone,'Votre réservation est confirmée.');
+        $SmsSent->send($phone,'Your reservation is confirmed.');
     }
 }
