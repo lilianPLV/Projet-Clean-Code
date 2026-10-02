@@ -39,17 +39,57 @@ $threeDays = createBooking('standard', '3days', 60.0, 2);
 $threeDaysTotal = $service->confirm($threeDays, $gateway);
 $tests->near(100.0, $threeDaysTotal, 'legacy three day pass discount is 20 euros');
 
-
+// Correct PhoneNumber
 $phonenumber = createBooking('standard', 'day', 50.0, 2, '0612345678');
 $tests->same(10,strlen($phonenumber->customer->phone),'phone number contains 10 digits');
 
 
-$TicketPrice = createBooking('vip', 'day', 50.0, 2);
 
-$bookingTotal = $service->confirm($TicketPrice, $gateway);
+
+// VIP : total < 100 €
+$vip100 = createBooking('vip', 'day', 80.0, 1);
+
+$vip100Total = $service->confirm($vip100, $gateway);
+
+$tests->near(
+    76.0,
+    $vip100Total,
+    'VIP gets 5 percent discount below 100 euros'
+);
+
+// VIP :   100 € < total <299 €
+$vip300 = createBooking('vip', 'day', 200.0, 1);
+
+$vip300Total = $service->confirm($vip300, $gateway);
+
+$tests->near(
+    180.0,
+    $vip300Total,
+    'VIP gets 10 percent discount between 100 and 299 euros'
+);
+
+// VIP : total > 300 €
+$vipSuperior300 = createBooking('vip', 'day', 400.0, 1);
+
+$vipSuperior300Total = $service->confirm($vipSuperior300, $gateway);
+
+$tests->near(
+    340.0,
+    $vipSuperior300Total,
+    'VIP gets 15 percent discount from 300 euros'
+);
 
 $tests->same(true,$bookingTotal >= 0,'final ticket price is not negative after discount');
 
+$cheapThreeDays = createBooking('standard', '3days', 20.0, 1);
+
+$cheapThreeDaysTotal = $service->confirm($cheapThreeDays, $gateway);
+
+$tests->same(
+    0.0,
+    $cheapThreeDaysTotal,
+    'final ticket price cannot be negative'
+);
 
 ob_end_clean();
 $tests->summary();

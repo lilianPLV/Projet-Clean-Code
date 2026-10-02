@@ -1,27 +1,40 @@
 <?php
 
 interface CalculReduction {
+    
     public function calcul(float $total) : float;
 }
 class CalculReductionVIP implements CalculReduction
 {
+    public function __construct(
+        private array $reduction
+    ) {}
+
     public function calcul(float $total) : float {
-        if ($total < 100) { return $total*=0.95 ;}
-        if ($total <299) { return $total*=0.9 ;}
+        if ($total <100) { return $total*$this->reduction['TotalLowerThan100'] ;}
+        if ($total <299) { return $total*=$this->reduction['TotalLowerThan300'] ;}
         
-        return $total*=0.85;
+        return $total*=$this->reduction['TotalSuperiorThan300'];
     }
 }
 
 class CalculReductionPassType implements CalculReduction
 {
+    public function __construct(
+        private array $reduction
+    ) {}
+
     public function calcul(float $total) : float {
-        return $total-=20;
+        return $total-=$this->reduction['Reduction20'];
     }
 }
 
 class CalculTotalReduction implements CalculReduction
 {
+    public function __construct(
+        private array $reduction
+    ) {}
+
     public function calcul(float $total) : float {
         if ($total > 0 ) { return $total ; }
         return 0;
