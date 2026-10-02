@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+
 final class BookingService
 {
     public function confirm(Booking $booking, string $paymentMethod = 'stripe'): float
@@ -24,14 +25,15 @@ final class BookingService
             $total += $item->ticket->price * $item->quantity;
         }
 
-        // Ancienne règle VIP : remise fixe de 10 %.
         if ($booking->customer->type === 'vip') {
-            $total *= 0.90;
+            $valueReductionVIP = new CalculReductionVIP;
+            $total = $valueReductionVIP->calcul($total);
+
         }
 
-        // Ancienne règle Pass 3 jours : remise fixe de 10 euros.
         if ($booking->passType === '3days') {
-            $total -= 10.0;
+            $valueReductionPassType = new CalculReductionPassType();
+            $total = $valueReductionPassType->calcul($total);
         }
 
         if ($paymentMethod === 'stripe') {
