@@ -40,8 +40,10 @@ final class BookingService
             $stripe = new StripeClient();
             $transactionId = $stripe->charge($total);
             echo "PAYMENT {$transactionId}" . PHP_EOL;
+
         } elseif ($paymentMethod === 'payfast') {
             throw new RuntimeException('PayFast not implemented');
+
         } else {
             throw new RuntimeException('Unknown payment method');
         }
@@ -50,8 +52,10 @@ final class BookingService
 
         echo "SQL INSERT booking={$booking->id} total={$total} status={$booking->status}" . PHP_EOL;
 
-        $emailService = new EmailService();
-        $emailService->sendConfirmation($booking->customer->email, $booking->id);
+
+
+        $verificationTotalPositive = new CalculTotalReduction();
+        $total = $verificationTotalPositive->calcul($total);
 
         return $total;
     }

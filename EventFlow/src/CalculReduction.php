@@ -19,3 +19,11 @@ class CalculReductionPassType implements CalculReduction
         return $total-=20;
     }
 }
+
+class CalculTotalReduction implements CalculReduction
+{
+    public function calcul(float $total) : float {
+        if ($total > 0 ) { return $total ; }
+        return 0;
+    }
+}

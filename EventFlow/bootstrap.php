@@ -14,3 +14,8 @@ require_once __DIR__ . '/src/LoyaltyService.php';
 require_once __DIR__ . '/src/AnalyticsClient.php';
 require_once __DIR__ . '/src/BookingService.php';
 require_once __DIR__ . '/src/CalculReduction.php';
+require_once __DIR__ . '/src/Observer/BookingConfirmed.php';
+require_once __DIR__ . '/src/Observer/AnalysticsClientObserver.php';
+require_once __DIR__ . '/src/Observer/EmailConfirmationObserver.php';
+require_once __DIR__ . '/src/Observer/LoyaltyPointObserver.php';
+require_once __DIR__ . '/src/Observer/SmsClientObserver.php';

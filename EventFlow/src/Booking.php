@@ -11,7 +11,10 @@ final class Booking
     public function __construct(
         public int $id,
         public Customer $customer,
-        public string $passType = 'day'
+        public string $passType = 'day',
+        public string $event = 'Paris-Orléans',
+        public array $data = [],
+        public int $LoyaltyPoints = 10
     ) {
     }
 

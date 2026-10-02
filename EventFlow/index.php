@@ -28,4 +28,16 @@ $booking->addItem(new BookingItem($dayTicket, 2));
 $service = new BookingService();
 $total = $service->confirm($booking, 'stripe');
 
-echo 'TOTAL FINAL: ' . number_format($total, 2, '.', '') . PHP_EOL;
+$analyticsClientObserver = new AnalyticsClientObserver();
+$smsClientObserver = new SmsClientObserver();
+$loyaltyPointObserver = new LoyaltyPointObserver();
+$emailConfirmationObserver = new EmailConfirmationObserver();
+
+$event = new BookingConfirmed($booking);
+
+$analyticsClientObserver->analysticClient($event);
+$smsClientObserver->Sms($event);
+$loyaltyPointObserver->LoyaltyPoint($event);
+$emailConfirmationObserver->EmailConfirmed($event);
+
+echo 'TOTAL FINAL: ' . number_format($total, 2, '.', '') . PHP_EOL;;
